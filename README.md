@@ -7,16 +7,24 @@
 **Linux / macOS**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/firstwxx1/nodepanel-installer/main/install.sh | bash
+git clone https://github.com/firstwxx1/nodepanel-installer.git && cd nodepanel-installer && bash install.sh
 ```
 
-**Windows**（PowerShell 或 cmd）
+不想用 git 就用 zip（不依赖 raw.githubusercontent）：
+
+```bash
+curl -fsSL https://github.com/firstwxx1/nodepanel-installer/archive/refs/heads/main.zip -o np.zip \
+  && python3 -c "import zipfile;zipfile.ZipFile('np.zip').extractall('.')" \
+  && python3 nodepanel-installer-main/install.py
+```
+
+**Windows**
+
+下载仓库 zip 解压，双击 `install.bat`，或：
 
 ```powershell
-powershell -c "irm https://raw.githubusercontent.com/firstwxx1/nodepanel-installer/main/install.py -o install.py; python install.py"
+python install.py
 ```
-
-或者下载 `install.bat` 双击运行。
 
 **已 clone 仓库** — 本地安装：
 

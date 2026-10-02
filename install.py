@@ -26,7 +26,7 @@ import zipfile
 REPO = "firstwxx1/nodepanel-installer"
 BRANCH = "main"
 ZIP_URL = "https://github.com/%s/archive/refs/heads/%s.zip" % (REPO, BRANCH)
-RAW_INSTALL = "https://raw.githubusercontent.com/%s/%s/install.py" % (REPO, BRANCH)
+CLONE_URL = "https://github.com/%s.git" % REPO
 
 DEPS = ["paramiko", "segno", "cryptography"]
 PORT = 8765
@@ -82,10 +82,11 @@ def pip_install_deps():
 
 
 def fetch_source(dest, force):
-    """下载仓库源码到 dest；仓库内已含源码时直接使用。"""
+    """下载仓库源码到 dest；脚本就在目标目录内时直接使用当前源码。"""
     here = os.path.dirname(os.path.abspath(__file__))
-    if os.path.isfile(os.path.join(here, "app.py")) and os.path.isdir(os.path.join(here, "ui")):
-        ok("已在仓库目录内，使用当前源码")
+    in_repo = os.path.isfile(os.path.join(here, "app.py")) and os.path.isdir(os.path.join(here, "ui"))
+    if in_repo and os.path.abspath(dest) == here:
+        ok("使用当前目录源码")
         return here
 
     if os.path.isfile(os.path.join(dest, "app.py")) and not force:
@@ -206,8 +207,14 @@ def main():
 
     here = os.path.dirname(os.path.abspath(__file__))
     in_repo = os.path.isfile(os.path.join(here, "app.py"))
-    dest = os.path.abspath(args.dir) if args.dir else (here if in_repo else os.path.join(os.getcwd(), "nodepanel"))
+    if args.dir:
+        dest = os.path.abspath(args.dir)
+    elif in_repo and os.path.abspath(os.getcwd()) == here:
+        dest = here                      # 在仓库目录里直接跑 = 原地安装
+    else:
+        dest = os.path.join(os.getcwd(), "nodepanel")
 
+    log("安装目录：%s" % dest)
     log("[1/4] 获取源码")
     dest = fetch_source(dest, args.force)
 
