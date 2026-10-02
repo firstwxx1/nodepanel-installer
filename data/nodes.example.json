@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "local": {
+    "xray": "xray.exe",
+    "hysteria": "hysteria.exe",
+    "speed_url": "https://proof.ovh.net/files/10Mb.dat"
+  },
+  "servers": [
+    {
+      "id": "box1",
+      "name": "示例机 · xray",
+      "host": "1.2.3.4",
+      "ssh_user": "root",
+      "ssh_pass": "你的SSH密码",
+      "engine": "xray",
+      "service": "xray",
+      "config_path": "/usr/local/etc/xray/config.json",
+      "core_bin": "/usr/local/bin/xray",
+      "allowed_ports": [443, 8443, 4443]
+    },
+    {
+      "id": "box3",
+      "name": "示例机 · sing-box",
+      "host": "5.6.7.8",
+      "ssh_user": "root",
+      "ssh_pass": "你的SSH密码",
+      "engine": "sing-box",
+      "service": "sing-box",
+      "config_path": "/etc/sing-box/config.json",
+      "core_bin": "/usr/local/bin/sing-box",
+      "allowed_ports": [2083, 25774]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "box1-vless-8443",
+      "server_id": "box1",
+      "label": "示例-VLESS-8443",
+      "protocol": "vless",
+      "port": 8443,
+      "inbound_tag": "reality-8443",
+      "params": {
+        "uuid": "换成你的UUID",
+        "flow": "xtls-rprx-vision",
+        "sni": "www.cloudflare.com",
+        "fp": "chrome",
+        "pbk": "服务端Reality公钥",
+        "sid": "00000000"
+      }
+    },
+    {
+      "id": "box1-hy2-8443",
+      "server_id": "box1",
+      "label": "示例-Hy2-8443",
+      "protocol": "hysteria2",
+      "port": 8443,
+      "inbound_tag": "hy2-8443",
+      "params": {
+        "auth": "换成你的口令",
+        "sni": "www.cloudflare.com",
+        "insecure": true,
+        "obfs": "salamander",
+        "obfs_password": "混淆口令"
+      }
+    },
+    {
+      "id": "box1-socks5",
+      "server_id": "box1",
+      "label": "示例-SOCKS5",
+      "protocol": "socks5",
+      "port": 1080,
+      "inbound_tag": "socks-in",
+      "params": {
+        "username": "用户名",
+        "password": "口令"
+      }
+    }
+  ]
+}

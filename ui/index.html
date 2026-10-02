@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NodePanel · 节点管理</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <div class="brand" id="brand"><span class="dot"></span> NodePanel<span class="sub" id="crumb">全部服务器</span></div>
+  <div class="actions">
+    <span id="stamp" class="stamp">未刷新</span>
+    <button id="btnAllLinks">导出全部</button>
+    <button id="btnRefresh" class="primary">刷新状态</button>
+  </div>
+</header>
+
+<main>
+  <div id="view"></div>
+  <div id="empty" class="empty" hidden>加载中…</div>
+</main>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# 真实节点数据：含 SSH root 密码、Reality 私钥、UUID — 绝不入库
+data/nodes.json
+data/*.bak
+*.panel.bak
+
+# 本地测试用二进制与临时文件
+*.exe
+*.zip
+*.png
+*.log
+
+__pycache__/
+*.pyc
+.DS_Store
